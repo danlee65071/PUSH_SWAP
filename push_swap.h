@@ -6,7 +6,7 @@
 /*   By: lcharlet <lcharlet@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 16:30:51 by lcharlet          #+#    #+#             */
-/*   Updated: 2021/10/18 12:03:54 by hcharlsi         ###   ########.fr       */
+/*   Updated: 2021/10/18 14:42:35 by hcharlsi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ int			put_in_a(t_list **stack_a, t_list **stack_b, t_data *data);
 int			back_to_b(t_list **stack_a, t_list **stack_b, t_data *data);
 int			find_max_order(t_list **stack_a);
 void		sort_second_half(t_list **stack_a, t_list **stack_b, t_data *data);
-void 		top_down(t_list **stack_a, t_data *data);
+void 		top_down(t_list **stack_a, t_list **stack_b, t_data *data);
 void 		less_six (t_list **stack_a, t_list **stack_b, t_data *data);
 void		put_in_b(t_list **stack_a, t_list **stack_b, t_data *data);
+int			is_sorted(t_list **stack_a);
 
 //utils functions
 // pta

@@ -6,7 +6,7 @@
 /*   By: lcharlet <lcharlet@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:55:40 by lcharlet          #+#    #+#             */
-/*   Updated: 2021/10/18 12:23:43 by hcharlsi         ###   ########.fr       */
+/*   Updated: 2021/10/18 17:01:32 by hcharlsi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	put_in_a(t_list **stack_a, t_list **stack_b, t_data *data)
 	max = find_max_order(stack_b);
 	mid = (max - data->next) / 2 + data->next;
 	qnty_push = 0;
-
 	while (qnty_push < max - mid + 1)
 	{
 		if (*stack_b == NULL)
@@ -48,16 +47,7 @@ int	put_in_a(t_list **stack_a, t_list **stack_b, t_data *data)
 		{
 			(*stack_b)->flag = data->flag;
 			pa(stack_a, stack_b);
-			top_down(stack_a, data);
-			qnty_push++;
-		}
-		else if ((*stack_b)->prev->order >= mid
-			&& find_last(stack_b)->order >= mid)
-		{
-			sb(stack_b, 0);
-			(*stack_b)->flag = data->flag;
-			pa(stack_a, stack_b);
-			top_down(stack_a, data);
+			top_down(stack_a, stack_b, data);
 			qnty_push++;
 		}
 		else if (find_last(stack_b)->order >= mid)
@@ -65,9 +55,18 @@ int	put_in_a(t_list **stack_a, t_list **stack_b, t_data *data)
 			rrb(stack_b, 0);
 			(*stack_b)->flag = data->flag;
 			pa(stack_a, stack_b);
-			top_down(stack_a, data);
+			top_down(stack_a, stack_b, data);
 			qnty_push++;
 		}
+//		else if (find_last(stack_b)->next->order >= mid)
+//		{
+//			rrb(stack_b, 0);
+//			rrb(stack_b, 0);
+//			(*stack_b)->flag = data->flag;
+//			pa(stack_a, stack_b);
+//			top_down(stack_a, stack_b, data);
+//			qnty_push++;
+//		}
 		else
 			rb(stack_b, 0);
 	}
@@ -116,7 +115,7 @@ static int one_two_free_els_to_a(t_list **stack_a, t_list **stack_b, t_data *dat
 		pa(stack_a, stack_b);
 		pa(stack_a, stack_b);
 	}
-	top_down(stack_a, data);
+	top_down(stack_a, stack_b, data);
 	return (0);
 }
 
