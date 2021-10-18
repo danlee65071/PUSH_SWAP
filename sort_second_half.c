@@ -6,7 +6,7 @@
 /*   By: lcharlet <lcharlet@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 21:06:12 by lcharlet          #+#    #+#             */
-/*   Updated: 2021/10/18 17:07:44 by hcharlsi         ###   ########.fr       */
+/*   Updated: 2021/10/19 02:01:21 by hcharlsi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,10 @@ void	sort_second_half(t_list **stack_a, t_list **stack_b, t_data *data)
 		put_in_b(stack_a, stack_b, data);
 		while (find_last(stack_a)->order > data->next - 1)
 		{
-			if ((*stack_b) && (*stack_b)->order != data->next
-				&& (*stack_b)->order != find_max_order(stack_b))
+			if (*stack_b && (*stack_b)->order < data->next)
 				rrr(stack_a, stack_b);
 			else
 				rra(stack_a, 0);
-			top_down(stack_a, stack_b, data);
 		}
 		while (qnty_els_in_stack(stack_b) != 0)
 		{
@@ -44,7 +42,7 @@ void	sort_second_half(t_list **stack_a, t_list **stack_b, t_data *data)
 
 static int	sort_end(t_list **stack_a, t_list **stack_b, t_data *data)
 {
-	if (data->next >= data->max_order - 7)
+	if (data->next >= data->max_order - 5)
 	{
 		while ((*stack_a)->order >= data->next)
 		{

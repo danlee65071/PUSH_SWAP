@@ -6,7 +6,7 @@
 /*   By: lcharlet <lcharlet@student.21-school.ru    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 16:30:51 by lcharlet          #+#    #+#             */
-/*   Updated: 2021/10/18 14:42:35 by hcharlsi         ###   ########.fr       */
+/*   Updated: 2021/10/18 17:09:34 by hcharlsi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		sort_five_el(t_list	**stack_a, t_list	**stack_b);
 void		algoritm(t_list **stack_a, t_list **stack_b, t_data *data);
 void		alg_brazh(t_list **stack_a, int argc);
 int			put_in_a(t_list **stack_a, t_list **stack_b, t_data *data);
-int			back_to_b(t_list **stack_a, t_list **stack_b, t_data *data);
+void		back_to_b(t_list **stack_a, t_list **stack_b, t_data *data);
 int			find_max_order(t_list **stack_a);
 void		sort_second_half(t_list **stack_a, t_list **stack_b, t_data *data);
 void 		top_down(t_list **stack_a, t_list **stack_b, t_data *data);

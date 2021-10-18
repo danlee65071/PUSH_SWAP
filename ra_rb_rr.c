@@ -54,8 +54,8 @@ void	rb(t_list **stack, int is_rr)
 
 void	rr(t_list **stack_a, t_list **stack_b)
 {
-	if (*stack_a == NULL || (*stack_a)->prev == NULL || *stack_b == NULL || (*stack_b)->prev == NULL)
-		return ;
+//	if (*stack_a == NULL || (*stack_a)->prev == NULL || *stack_b == NULL || (*stack_b)->prev == NULL)
+//		return ;
 	ra(stack_a, 1);
 	rb(stack_b, 1);
 	write(1, "rr\n", 3);

@@ -6,7 +6,7 @@
 /*   By: lcharlet <lcharlet@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:55:40 by lcharlet          #+#    #+#             */
-/*   Updated: 2021/10/18 17:01:32 by hcharlsi         ###   ########.fr       */
+/*   Updated: 2021/10/19 02:07:07 by hcharlsi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	put_in_a(t_list **stack_a, t_list **stack_b, t_data *data)
 	int	mid;
 	int	max;
 	int	qnty_push;
-	t_list	*iterator;
 
 	data->flag++;
 	max = find_max_order(stack_b);
@@ -33,16 +32,8 @@ int	put_in_a(t_list **stack_a, t_list **stack_b, t_data *data)
 			return (0);
 		if (check_next_element(stack_a, stack_b, data) == 1)
 			continue ;
-		if (qnty_els_in_stack(stack_b) < 4)
-		{
-			iterator = *stack_b;
-			while (iterator)
-			{
-				iterator->flag = data->flag;
-				iterator = iterator->prev;
-			}
+		if (qnty_els_in_stack(stack_b) < 6)
 			return (one_two_free_els_to_a(stack_a, stack_b, data));
-		}
 		if ((*stack_b)->order >= mid)
 		{
 			(*stack_b)->flag = data->flag;
@@ -50,23 +41,6 @@ int	put_in_a(t_list **stack_a, t_list **stack_b, t_data *data)
 			top_down(stack_a, stack_b, data);
 			qnty_push++;
 		}
-		else if (find_last(stack_b)->order >= mid)
-		{
-			rrb(stack_b, 0);
-			(*stack_b)->flag = data->flag;
-			pa(stack_a, stack_b);
-			top_down(stack_a, stack_b, data);
-			qnty_push++;
-		}
-//		else if (find_last(stack_b)->next->order >= mid)
-//		{
-//			rrb(stack_b, 0);
-//			rrb(stack_b, 0);
-//			(*stack_b)->flag = data->flag;
-//			pa(stack_a, stack_b);
-//			top_down(stack_a, stack_b, data);
-//			qnty_push++;
-//		}
 		else
 			rb(stack_b, 0);
 	}
@@ -75,48 +49,21 @@ int	put_in_a(t_list **stack_a, t_list **stack_b, t_data *data)
 
 static int one_two_free_els_to_a(t_list **stack_a, t_list **stack_b, t_data *data)
 {
-	int	qnty_els_b;
+	t_list	*iterator;
 
-	qnty_els_b = qnty_els_in_stack(stack_b);
-	if (qnty_els_b == 1)
-		pa(stack_a, stack_b);
-	else if (qnty_els_b == 2)
+	iterator = *stack_b;
+	while (iterator)
 	{
-		if ((*stack_b)->order < (*stack_b)->prev->order)
-			sb(stack_b, 0);
-		pa(stack_a, stack_b);
-		pa(stack_a, stack_b);
+		iterator->flag = data->flag;
+		iterator = iterator->prev;
 	}
-	else if (qnty_els_b == 3)
+	check_next_element(stack_a, stack_b, data);
+	while (qnty_els_in_stack(stack_b))
 	{
-		if ((*stack_b)->prev->order > (*stack_b)->order
-			&& (*stack_b)->prev->order > (*stack_b)->prev->prev->order)
-		{
-			sb(stack_b, 0);
-		}
-		else if (((*stack_b)->prev->prev->order > (*stack_b)->prev->order
-			&& (*stack_b)->prev->prev->order < (*stack_b)->order)
-			|| ((*stack_b)->prev->prev->order < (*stack_b)->prev->order
-				&& (*stack_b)->prev->prev->order > (*stack_b)->order))
-		{
-			if ((*stack_b)->prev->prev->order > (*stack_b)->prev->order
-				&& (*stack_b)->prev->prev->order < (*stack_b)->order)
-				sb(stack_b, 0);
-			rb(stack_b, 0);
-		}
-		else if (((*stack_b)->prev->prev->order > (*stack_b)->prev->order
-			&& (*stack_b)->prev->prev->order > (*stack_b)->order))
-		{
-			if ((*stack_b)->order < (*stack_b)->prev->order)
-				sb(stack_b, 0);
-			rb(stack_b, 0);
-		}
 		pa(stack_a, stack_b);
-		pa(stack_a, stack_b);
-		pa(stack_a, stack_b);
+		top_down(stack_a, stack_b, data);
 	}
-	top_down(stack_a, stack_b, data);
-	return (0);
+	return 0;
 }
 
 int	qnty_els_in_stack(t_list **stack)
@@ -140,38 +87,32 @@ static int	check_next_element(t_list **stack_a, t_list **stack_b, t_data *data)
 	{
 		(*stack_b)->flag = data->flag;
 		pa(stack_a, stack_b);
-		ra(stack_a, 0);
+		if (*stack_b && (*stack_b)->order < data->next)
+			rr(stack_a, stack_b);
+		else
+			ra(stack_a, 0);
 		data->next++;
+		return (1);
 	}
 	else if ((*stack_b) && (*stack_b)->prev
 		&& (*stack_b)->prev->order == data->next)
-	{
 		sb(stack_b, 0);
-		(*stack_b)->flag = data->flag;
-		pa(stack_a, stack_b);
-		ra(stack_a, 0);
-		data->next++;
-	}
 	else if ((*stack_b) && find_last(stack_b)->order == data->next)
-	{
 		rrb(stack_b, 0);
-		(*stack_b)->flag = data->flag;
-		pa(stack_a, stack_b);
-		ra(stack_a, 0);
-		data->next++;
-	}
-	else if ((*stack_b)
-		&& find_last(stack_b)->next
+	else if (*stack_b && find_last(stack_b)->next
 		&& find_last(stack_b)->next->order == data->next)
 	{
 		rrb(stack_b, 0);
 		rrb(stack_b, 0);
-		(*stack_b)->flag = data->flag;
-		pa(stack_a, stack_b);
-		ra(stack_a, 0);
-		data->next++;
 	}
 	else
 		return (0);
+	(*stack_b)->flag = data->flag;
+	pa(stack_a, stack_b);
+	if ((*stack_b) && (*stack_b)->order < data->next)
+		rr(stack_a, stack_b);
+	else
+		ra(stack_a, 0);
+	data->next++;
 	return (1);
 }

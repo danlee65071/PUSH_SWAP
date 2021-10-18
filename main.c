@@ -6,7 +6,7 @@
 /*   By: lcharlet <lcharlet@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 15:55:40 by lcharlet          #+#    #+#             */
-/*   Updated: 2021/10/18 17:04:29 by hcharlsi         ###   ########.fr       */
+/*   Updated: 2021/10/19 01:49:27 by hcharlsi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv)
 	data.argc = argc;
 //	data.stack_b = init_list("0");
 	data.stack_b = NULL;
+//	test(&data.stack_a, &data.stack_b);
 	algoritm(&data.stack_a, &data.stack_b, &data);
 //	test(&data.stack_a, &data.stack_b);
 	return (0);

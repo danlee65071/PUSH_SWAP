@@ -2,27 +2,30 @@
 
 void test(t_list **stack_a, t_list **stack_b)
 {
+	t_list *a = *stack_a;
+	t_list *b = *stack_b;
+
 	printf("%s\n%s\n%s\n%s\n", "------------------------", "stack_a", "------------------------", "value | order |   flag |");
-	while (*stack_a != NULL)
+	while (a != NULL)
 	{
-		printf("%6d", (*stack_a)->chislo);
+		printf("%6d", a->chislo);
 		printf("%s", "|");
-		printf("%7d", (*stack_a)->order);
+		printf("%7d", a->order);
 		printf("%s", "|");
-		printf("%8d", (*stack_a)->flag);
+		printf("%8d", a->flag);
 		printf("%s", "|\n");
-		*stack_a = (*stack_a)->prev;
+		a = a->prev;
 	}
 	printf("%s\n%s\n%s\n%s\n", "------------------------", "stack_b", "------------------------", "value | order | flag |");
-	while (*stack_b != NULL)
+	while (b != NULL)
 	{
-		printf("%6d", (*stack_b)->chislo);
+		printf("%6d", b->chislo);
 		printf("%s", "|");
-		printf("%7d", (*stack_b)->order);
+		printf("%7d", b->order);
 		printf("%s", "|");
-		printf("%8d", (*stack_b)->flag);
+		printf("%8d", b->flag);
 		printf("%s", "|\n");
-		*stack_b = (*stack_b)->prev;
+		b = b->prev;
 	}
 		printf("%s\n", "------------------------");
 }
